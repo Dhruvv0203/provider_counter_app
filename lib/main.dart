@@ -93,6 +93,17 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
+            // Green "Increase Age" Button above Slider
+            ElevatedButton(
+              onPressed: counter.increaseAge,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.green,
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              ),
+              child: const Text("Increase Age", style: TextStyle(color: Colors.white)),
+            ),
+            const SizedBox(height: 10),
+            // Age Slider
             Slider(
               value: counter.age.toDouble(),
               min: 0,
@@ -100,9 +111,19 @@ class MyHomePage extends StatelessWidget {
               divisions: 99,
               label: '${counter.age}',
               onChanged: (value) {
-                counter.setAge(value.toInt()); // Use setAge() method
+                counter.setAge(value.toInt());
               },
             ),
+            // Red "Decrease Age" Button below Slider
+            ElevatedButton(
+              onPressed: counter.decreaseAge,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+              ),
+              child: const Text("Decrease Age", style: TextStyle(color: Colors.white)),
+            ),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: LinearProgressIndicator(
@@ -117,22 +138,6 @@ class MyHomePage extends StatelessWidget {
             ),
           ],
         ),
-      ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: counter.increaseAge,
-            tooltip: 'Increase Age',
-            child: const Icon(Icons.add),
-          ),
-          const SizedBox(height: 10),
-          FloatingActionButton(
-            onPressed: counter.decreaseAge,
-            tooltip: 'Decrease Age',
-            child: const Icon(Icons.remove),
-          ),
-        ],
       ),
     );
   }
