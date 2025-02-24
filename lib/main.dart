@@ -41,7 +41,7 @@ class Counter with ChangeNotifier {
     if (_age <= 19) return Colors.lightGreen;
     if (_age <= 30) return Colors.yellow;
     if (_age <= 50) return Colors.orange;
-    return Colors.grey;
+    return const Color.fromARGB(255, 229, 141, 141);
   }
 
   String getAgeMessage() {
