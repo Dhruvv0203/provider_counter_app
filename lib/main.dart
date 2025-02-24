@@ -11,43 +11,49 @@ void main() {
 }
 
 class Counter with ChangeNotifier {
-  int age = 0;
+  int _age = 0;
+
+  int get age => _age;
+
+  void setAge(int newAge) {
+    if (newAge >= 0 && newAge <= 99) {
+      _age = newAge;
+      notifyListeners();
+    }
+  }
 
   void increaseAge() {
-    if (age < 99) {
-      age += 1;
+    if (_age < 99) {
+      _age++;
       notifyListeners();
     }
   }
 
   void decreaseAge() {
-    if (age > 0) {
-      age -= 1;
+    if (_age > 0) {
+      _age--;
       notifyListeners();
     }
   }
 
-  // Method to return background color based on age milestone
   Color getBackgroundColor() {
-    if (age <= 12) return Colors.lightBlue;
-    if (age <= 19) return Colors.lightGreen;
-    if (age <= 30) return Colors.yellow;
-    if (age <= 50) return Colors.orange;
+    if (_age <= 12) return Colors.lightBlue;
+    if (_age <= 19) return Colors.lightGreen;
+    if (_age <= 30) return Colors.yellow;
+    if (_age <= 50) return Colors.orange;
     return Colors.grey;
   }
 
-  // Method to return message based on age milestone
   String getAgeMessage() {
-    if (age <= 12) return "You're a child!";
-    if (age <= 19) return "Teenager time!";
-    if (age <= 30) return "You're a young adult!";
-    if (age <= 50) return "You're an adult now!";
+    if (_age <= 12) return "You're a child!";
+    if (_age <= 19) return "Teenager time!";
+    if (_age <= 30) return "You're a young adult!";
+    if (_age <= 50) return "You're an adult now!";
     return "Golden years!";
   }
 
-  // Progress bar value
   double getProgress() {
-    return age / 99;
+    return _age / 99;
   }
 }
 
@@ -58,25 +64,27 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Age Counter App',
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final counter = Provider.of<Counter>(context);
 
     return Scaffold(
-      backgroundColor: counter.getBackgroundColor(), // Background color changes based on age
+      backgroundColor: counter.getBackgroundColor(),
       appBar: AppBar(title: const Text('Age Counter')),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              counter.getAgeMessage(), // Display message based on age milestone
+              counter.getAgeMessage(),
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             Consumer<Counter>(
@@ -92,8 +100,7 @@ class MyHomePage extends StatelessWidget {
               divisions: 99,
               label: '${counter.age}',
               onChanged: (value) {
-                counter.age = value.toInt();
-                counter.notifyListeners();
+                counter.setAge(value.toInt()); // Use setAge() method
               },
             ),
             Padding(
